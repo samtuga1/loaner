@@ -37,7 +37,10 @@ class GreetingBarner extends StatelessWidget {
               ),
               Expanded(
                 child: ListTile(
-                  leading: CircleAvatar(),
+                  leading: CircleAvatar(
+                    radius: 27,
+                    backgroundColor: Colors.purple[300],
+                  ),
                   title: const Text(
                     'Welcome Samuel',
                     style: TextStyle(fontSize: 17, color: Colors.grey),

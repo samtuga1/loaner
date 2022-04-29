@@ -3,26 +3,27 @@ import 'package:flutter/material.dart';
 class GreetingBarner extends StatelessWidget {
   const GreetingBarner({Key? key, required this.dashboardKey})
       : super(key: key);
-  final dashboardKey;
+  final dynamic dashboardKey;
 
   @override
   Widget build(BuildContext context) {
     return PhysicalModel(
       elevation: 5,
       borderRadius: const BorderRadius.only(
-        bottomLeft: Radius.circular(10),
-        bottomRight: Radius.circular(10),
+        bottomLeft: Radius.circular(15),
+        bottomRight: Radius.circular(15),
       ),
       shadowColor: Colors.black54,
       color: Colors.grey,
       child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8),
         alignment: Alignment.topCenter,
         width: double.infinity,
         decoration: const BoxDecoration(
           color: Color(0xFFFFFFFF),
           borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10),
+            bottomLeft: Radius.circular(15),
+            bottomRight: Radius.circular(15),
           ),
         ),
         child: SafeArea(
@@ -52,11 +53,14 @@ class GreetingBarner extends StatelessWidget {
                   trailing: Container(
                     width: 38,
                     decoration: BoxDecoration(
-                      border: Border.all(width: 1),
+                      border: Border.all(width: 1.2),
                       shape: BoxShape.circle,
                     ),
                     child: const Center(
-                      child: Icon(Icons.notifications_none_sharp),
+                      child: Icon(
+                        Icons.notifications_none_sharp,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),

@@ -143,9 +143,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
                     colors: [
-                      Color(0xFF7B70F3),
-                      Color(0xFF7B70F3),
-                      Color(0xFF7B70F3).withOpacity(0.7),
+                      const Color(0xFF7B70F3),
+                      const Color(0xFF7B70F3),
+                      const Color(0xFF7B70F3).withOpacity(0.7),
                     ],
                   ),
                 ),

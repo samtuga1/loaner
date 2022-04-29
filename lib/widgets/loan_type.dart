@@ -20,13 +20,16 @@ class LoanType extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             shape: BoxShape.rectangle,
-            border: Border.all(width: 2, color: Colors.white),
+            border: Border.all(
+              width: 2,
+              color: const Color(0xFFFFFFFF),
+            ),
           ),
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(0.3),
               child: Card(
-                color: Colors.white,
+                color: const Color(0xFFFFFFFF),
                 elevation: 0,
                 child: Center(
                   child: SizedBox(
@@ -44,7 +47,7 @@ class LoanType extends StatelessWidget {
         ),
         Text(
           title,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         )
       ],
     );

@@ -36,7 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^2.3.2
   avatar_glow: ^2.0.2
-  circular_profile_avatar: ^2.0.5
+  image_picker: ^0.8.5
 
 dev_dependencies:
   flutter_test:

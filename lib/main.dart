@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: const Color(0xFFFFFFFF),
         textTheme: GoogleFonts.ptSansTextTheme(textTheme),
       ),
-      home: Dashboard(),
+      home: const AuthScreen(),
     );
   }
 }

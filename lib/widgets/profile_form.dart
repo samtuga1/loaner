@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileForm extends StatefulWidget {
   const ProfileForm({Key? key}) : super(key: key);
@@ -8,14 +11,27 @@ class ProfileForm extends StatefulWidget {
 }
 
 class _ProfileFormState extends State<ProfileForm> {
+  File? _pickedImage;
+
+  Future<void> selectImage() async {
+    final picker = ImagePicker();
+    final imageFile =
+        await picker.pickImage(source: ImageSource.camera, imageQuality: 60);
+    setState(() {
+      _pickedImage = File(imageFile!.path);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
       children: [
-        const Padding(
-          padding: EdgeInsets.all(17.0),
+        Padding(
+          padding: const EdgeInsets.all(17.0),
           child: CircleAvatar(
+            backgroundImage:
+                _pickedImage != null ? FileImage(_pickedImage!) : null,
             radius: 65,
           ),
         ),
@@ -23,9 +39,7 @@ class _ProfileFormState extends State<ProfileForm> {
           right: 15,
           top: 106,
           child: GestureDetector(
-            onTap: () {
-              print('select image');
-            },
+            onTap: selectImage,
             child: Container(
               child: const Center(
                 child: Icon(Icons.edit),

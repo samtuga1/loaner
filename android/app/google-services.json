@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "364752479373",
+    "project_id": "loaner-8a411",
+    "storage_bucket": "loaner-8a411.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:364752479373:android:ce34bec767a02b0d162ec4",
+        "android_client_info": {
+          "package_name": "com.example.loaner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "364752479373-qo5n11nusfhvv60coj9cmqdrughjq6b1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6AuWGI9zl_egBVi-2oINs7pqEMutEzj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "364752479373-qo5n11nusfhvv60coj9cmqdrughjq6b1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

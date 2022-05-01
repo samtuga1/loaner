@@ -6,10 +6,10 @@ import 'package:loaner/screens/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:loaner/screens/get_loans_screen.dart';
 import 'package:loaner/screens/home_loans_screen.dart';
-import 'package:loaner/screens/personal_loans_screen.dart';
 import 'package:loaner/screens/recommended_loans_screen.dart';
 import 'package:provider/provider.dart';
 import 'screens/auth_screen.dart';
+import 'screens/personal_loans_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,8 +47,7 @@ class MyApp extends StatelessWidget {
           routes: {
             RecommendedLoansScreen.routeName: (context) =>
                 const RecommendedLoansScreen(),
-            PersonalLoansScreen.routeName: (context) =>
-                const PersonalLoansScreen(),
+            BankDetailsScreen.routeName: (context) => const BankDetailsScreen(),
             HomeLoansScreen.routeName: (context) => const HomeLoansScreen(),
             GetLoansScreen.routeName: (context) => const GetLoansScreen(),
           },

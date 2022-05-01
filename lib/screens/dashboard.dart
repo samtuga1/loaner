@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:loaner/providers/loan.dart' as loans_provider;
 import '../widgets/balance_card.dart';
 import '../widgets/greetings_banner.dart';
 import '../widgets/loan_card.dart';
 import '../widgets/loan_type.dart';
+import 'package:provider/provider.dart';
 
 class Dashboard extends StatelessWidget {
   static const routeName = '/dashboard';
   Dashboard({Key? key}) : super(key: key);
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool isInit = true;
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +59,39 @@ class Dashboard extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: 5,
-              itemBuilder: (ctx, i) => const LoanCard(),
+            child: RefreshIndicator(
+              onRefresh: (() =>
+                  Provider.of<loans_provider.Loans>(context, listen: false)
+                      .fetchRecommendedLoans()),
+              child: FutureBuilder(
+                future:
+                    Provider.of<loans_provider.Loans>(context, listen: false)
+                        .fetchRecommendedLoans(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text(snapshot.error.toString());
+                  } else {
+                    return Consumer<loans_provider.Loans>(
+                      builder: (context, loanData, _) => ListView.builder(
+                        itemBuilder: (ctx, i) {
+                          return LoanCard(
+                            loanType: loanData.recommendedLoans[i].loanType,
+                            maxAmount: loanData.recommendedLoans[i].maxAmount!
+                                .toDouble(),
+                            interest: loanData.recommendedLoans[i].interest!
+                                .toDouble(),
+                          );
+                        },
+                        itemCount: loanData.recommendedLoans.length,
+                      ),
+                    );
+                  }
+                },
+              ),
             ),
           )
         ],

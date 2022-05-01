@@ -12,6 +12,7 @@ class Loan {
     required this.maxAmount,
   });
 
+  // Returns my data in a map form
   Map<String, dynamic> joJson() =>
       {'maxAmount': maxAmount, 'interest': interest, 'loanType': loanType};
 
@@ -22,7 +23,7 @@ class Loan {
 }
 
 class Loans with ChangeNotifier {
-  // Store the loans
+  // Store the loans according to thei respective names
   List<Loan> _recommendedLoans = [];
   List<Loan> _homeLoans = [];
   List<Loan> _personalLoans = [];
@@ -38,23 +39,29 @@ class Loans with ChangeNotifier {
     return [..._personalLoans];
   }
 
+//Method for fetching loans
+//Takes two arguments for filtering
   Future<void> fetchLoans({String? loanType, String? loanType2}) async {
     try {
       var data = await FirebaseFirestore.instance
           .collection('loans')
           .where('loanType', isEqualTo: loanType)
-          .get();
+          .get(); //Gets the loans data
+
+      //Iterates over the data thatt is being fetched
       List<Loan> loanList = List.from(
         data.docs.map(
           (doc) => Loan.fromSnapshot(doc),
         ),
       );
       if (loanType == 'personal') {
-        _personalLoans = loanList;
+        _personalLoans = loanList; //Returens personal loans
       }
       if (loanType == 'home') {
-        _homeLoans = loanList;
+        _homeLoans = loanList; //Returens home loans
       }
+
+      // This logic fetches recommended loans(all loans with interest in ascending form)
       if (loanType2 == 'recommended') {
         var data = await FirebaseFirestore.instance
             .collection('loans')
@@ -67,10 +74,9 @@ class Loans with ChangeNotifier {
         );
         _recommendedLoans = loanList;
       }
-      notifyListeners();
+      notifyListeners(); // Notifify all listeners
     } catch (error) {
-      print(error);
-      return;
+      rethrow;
     }
   }
 

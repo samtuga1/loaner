@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../screens/verification_screen.dart';
-import '../screens/personal_Credentials_Screen.dart';
+import '../screens/bank_detail.dart';
 import '../widgets/stepper_buttons.dart';
 import '../screens/loan_detail_screen.dart';
 

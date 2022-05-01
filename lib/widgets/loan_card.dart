@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 
 class LoanCard extends StatelessWidget {
-  const LoanCard({Key? key}) : super(key: key);
+  const LoanCard(
+      {Key? key,
+      required this.loanType,
+      required this.maxAmount,
+      required this.interest})
+      : super(key: key);
+  final String? loanType;
+  final double? maxAmount;
+  final double? interest;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +34,11 @@ class LoanCard extends StatelessWidget {
                       child: SizedBox(
                         height: 25,
                         width: 25,
-                        child: Image.asset('assets/images/house.png'),
+                        child: Image.asset(
+                          loanType == 'home'
+                              ? 'assets/images/house.png'
+                              : 'assets/images/personal-money.png',
+                        ),
                       ),
                     ),
                   ),
@@ -35,18 +47,18 @@ class LoanCard extends StatelessWidget {
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
-                        'Home loan',
-                        style: TextStyle(
+                        loanType == 'home' ? 'Home loan' : 'Personal Loan',
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 15),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
-                        'Lowest interest as low 0.8%',
-                        style: TextStyle(color: Colors.grey),
+                        'Lowest interest as low $interest%',
+                        style: const TextStyle(color: Colors.grey),
                       )
                     ],
                   ),
@@ -58,12 +70,12 @@ class LoanCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  const LoanDetailColumn(
-                    amount: 12000.00,
+                  LoanDetailColumn(
+                    amount: maxAmount!,
                     title: 'Max Amount',
                   ),
-                  const LoanDetailColumn(
-                    amount: 0.2,
+                  LoanDetailColumn(
+                    amount: interest!,
                     title: 'Interest',
                   ),
                   RaisedButton(

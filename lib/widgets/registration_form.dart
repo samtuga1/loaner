@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
 
 class RegistrationForm extends StatefulWidget {
-  const RegistrationForm({Key? key, required this.loginMode}) : super(key: key);
+  const RegistrationForm(
+      {Key? key,
+      required this.isLoading,
+      required this.loginMode,
+      required this.ctx,
+      required this.submitFm})
+      : super(key: key);
   final bool loginMode;
+  final dynamic ctx;
+  final bool isLoading;
+  final Function(
+    String email,
+    String username,
+    String password,
+  ) submitFm;
 
   @override
   State<RegistrationForm> createState() => _RegistrationFormState();
@@ -15,14 +28,15 @@ class _RegistrationFormState extends State<RegistrationForm> {
   final _formKey = GlobalKey<FormState>();
 
   //Method to submit form
-  void submitForm() {
+  Future<void> submitForm() async {
+    FocusScope.of(context).unfocus();
     bool formState = _formKey.currentState!.validate();
     if (formState == true) {
-      print('all correct');
-    } else {
-      print('wrong');
+      widget.submitFm(_email, _username, _password);
     }
   }
+
+  final passwordKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +54,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 ),
                 Expanded(
                   child: TextFormField(
+                    key: const ValueKey('email'),
                     keyboardType: TextInputType.emailAddress,
                     onChanged: (value) {
                       setState(() {
@@ -71,6 +86,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   ),
                   Expanded(
                     child: TextFormField(
+                      key: const ValueKey('username'),
                       onChanged: (value) {
                         setState(() {
                           _username = value.trim();
@@ -100,6 +116,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 ),
                 Expanded(
                   child: TextFormField(
+                    key: const ValueKey('password'),
                     onChanged: (value) {
                       setState(() {
                         _password = value.trim();
@@ -123,35 +140,38 @@ class _RegistrationFormState extends State<RegistrationForm> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(right: 15, left: 15),
-            child: InkWell(
-              radius: 40,
-              onTap: submitForm,
-              child: Container(
-                margin: const EdgeInsets.only(top: 25),
-                height: 60,
-                child: Center(
-                  child: Text(
-                    widget.loginMode ? 'Login' : 'Get Started',
-                    style: const TextStyle(fontSize: 17, color: Colors.white),
+          widget.isLoading == true
+              ? const Center(child: CircularProgressIndicator())
+              : Padding(
+                  padding: const EdgeInsets.only(right: 15, left: 15),
+                  child: InkWell(
+                    radius: 40,
+                    onTap: submitForm,
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 25),
+                      height: 60,
+                      child: Center(
+                        child: Text(
+                          widget.loginMode ? 'Login' : 'Get Started',
+                          style: const TextStyle(
+                              fontSize: 17, color: Colors.white),
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            const Color(0xFF7B70F3),
+                            const Color(0xFF7B70F3),
+                            const Color(0xFF7B70F3).withOpacity(0.7),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [
-                      const Color(0xFF7B70F3),
-                      const Color(0xFF7B70F3),
-                      const Color(0xFF7B70F3).withOpacity(0.7),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:loaner/widgets/stepper_buttons.dart';
+import '../screens/verification_screen.dart';
+import '../screens/personal_Credentials_Screen.dart';
+import '../widgets/stepper_buttons.dart';
 import '../screens/loan_detail_screen.dart';
 
 class GetLoansScreen extends StatefulWidget {
@@ -74,16 +76,8 @@ class _GetLoansScreenState extends State<GetLoansScreen> {
                       type: StepperType.horizontal,
                       steps: [
                         loanDetailScreen(),
-                        Step(
-                          isActive: _currentStep >= 1,
-                          title: const Text('Bank Details'),
-                          content: Container(),
-                        ),
-                        Step(
-                          isActive: _currentStep >= 2,
-                          title: const Text('Get Loan'),
-                          content: Container(),
-                        ),
+                        personalCredentialsScreen(_currentStep),
+                        verificationScreen(_currentStep),
                       ],
                       currentStep: _currentStep,
                       onStepTapped: (int newIndex) {
@@ -96,6 +90,8 @@ class _GetLoansScreenState extends State<GetLoansScreen> {
                           setState(() {
                             _currentStep++;
                           });
+                        } else {
+                          print('done');
                         }
                       },
                       onStepCancel: () {
@@ -108,11 +104,15 @@ class _GetLoansScreenState extends State<GetLoansScreen> {
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,
-                      child: StepperButton(nextPressed: () {
-                        _onStepContinue();
-                      }, backPressed: () {
-                        _onStepCancel();
-                      }),
+                      child: StepperButton(
+                        currentIndex: _currentStep,
+                        nextPressed: () {
+                          _onStepContinue();
+                        },
+                        backPressed: () {
+                          _onStepCancel();
+                        },
+                      ),
                     )
                   ],
                 ),

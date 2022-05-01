@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:loaner/widgets/profile_form.dart';
 import 'package:loaner/widgets/registration_form.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -10,10 +12,47 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  bool isLoading = false;
   bool _loginMode = true;
   void switchSignType() {
     setState(() {
       _loginMode = !_loginMode;
+    });
+  }
+
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Theme.of(context).errorColor,
+        content: Text(message),
+      ),
+    );
+  }
+
+  Future<void> submitFm(
+    String email,
+    String username,
+    String password,
+  ) async {
+    setState(() {
+      isLoading = true;
+    });
+    final _auth = FirebaseAuth.instance;
+    try {
+      if (_loginMode) {
+        final authResult = await _auth.signInWithEmailAndPassword(
+            email: email, password: password);
+      } else {
+        final authResult = await _auth.createUserWithEmailAndPassword(
+            email: email, password: password);
+      }
+    } on FirebaseAuthException catch (error) {
+      _showSnackBar(error.toString());
+    } catch (err) {
+      _showSnackBar('An error occured try again later');
+    }
+    setState(() {
+      isLoading = false;
     });
   }
 
@@ -47,7 +86,12 @@ class _AuthScreenState extends State<AuthScreen> {
                       .copyWith(color: Colors.black54, fontSize: 20),
                 ),
               ),
-              RegistrationForm(loginMode: _loginMode),
+              RegistrationForm(
+                loginMode: _loginMode,
+                ctx: context,
+                submitFm: submitFm,
+                isLoading: isLoading,
+              ),
               const SizedBox(
                 height: 8,
               ),

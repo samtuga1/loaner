@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loaner/screens/get_loans_screen.dart';
 
 class LoanCard extends StatelessWidget {
   const LoanCard(
@@ -16,7 +17,7 @@ class LoanCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 10),
       child: Card(
-        elevation: 1,
+        elevation: 1.5,
         color: const Color(0xFFFFFFFF),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -81,7 +82,9 @@ class LoanCard extends StatelessWidget {
                   RaisedButton(
                     elevation: 3,
                     color: const Color(0xFF7C71F4),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(GetLoansScreen.routeName);
+                    },
                     child: const Text(
                       'Apply Now',
                       style: TextStyle(color: Colors.white),

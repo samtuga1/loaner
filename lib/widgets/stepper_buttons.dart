@@ -17,7 +17,7 @@ class StepperButton extends StatelessWidget {
       child: Row(
         children: [
           GestureDetector(
-            onTap: backPressed,
+            onTap: currentIndex != 0 ? backPressed : null,
             child: Container(
               height: 50,
               width: 50,

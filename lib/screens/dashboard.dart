@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loaner/providers/loan.dart' as loans_provider;
+import '../screens/recommended_loans_screen.dart';
 import '../widgets/balance_card.dart';
 import '../widgets/greetings_banner.dart';
 import '../widgets/loan_card.dart';
@@ -40,7 +41,7 @@ class Dashboard extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 18.0, right: 20, top: 15),
+            padding: const EdgeInsets.only(left: 18.0, right: 16, top: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -49,7 +50,10 @@ class Dashboard extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
                 FlatButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed(RecommendedLoansScreen.routeName);
+                  },
                   child: const Text(
                     'View all',
                     style: TextStyle(fontSize: 15, color: Colors.black54),

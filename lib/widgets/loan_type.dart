@@ -19,7 +19,7 @@ class LoanType extends StatelessWidget {
         GestureDetector(
           onTap: () {
             if (title == 'Personal') {
-              Navigator.of(context).pushNamed(PersonalLoansScreen.routeName);
+              Navigator.of(context).pushNamed(BankDetailsScreen.routeName);
             }
             if (title == 'Home') {
               Navigator.of(context).pushNamed(HomeLoansScreen.routeName);

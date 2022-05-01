@@ -22,35 +22,36 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return ChangeNotifierProvider(
-      create: (context) => Loans(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false, //Removes the debug banner
-        title: 'Loan Manager',
-        theme: ThemeData(
-          scaffoldBackgroundColor: const Color(0xFFF7F5FF),
-          backgroundColor: const Color(0xFFFFFFFF),
-          textTheme: GoogleFonts.ptSansTextTheme(textTheme),
-        ),
-        home: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Dashboard();
-            } else {
-              return const AuthScreen();
-            }
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => Loans()),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false, //Removes the debug banner
+          title: 'Loan Manager',
+          theme: ThemeData(
+            scaffoldBackgroundColor: const Color(0xFFF7F5FF),
+            backgroundColor: const Color(0xFFFFFFFF),
+            textTheme: GoogleFonts.ptSansTextTheme(textTheme),
+          ),
+          home: StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Dashboard();
+              } else {
+                return const AuthScreen();
+              }
+            },
+          ),
+          routes: {
+            RecommendedLoansScreen.routeName: (context) =>
+                const RecommendedLoansScreen(),
+            PersonalLoansScreen.routeName: (context) =>
+                const PersonalLoansScreen(),
+            HomeLoansScreen.routeName: (context) => const HomeLoansScreen(),
+            GetLoansScreen.routeName: (context) => const GetLoansScreen(),
           },
-        ),
-        routes: {
-          RecommendedLoansScreen.routeName: (context) =>
-              const RecommendedLoansScreen(),
-          PersonalLoansScreen.routeName: (context) =>
-              const PersonalLoansScreen(),
-          HomeLoansScreen.routeName: (context) => const HomeLoansScreen(),
-          GetLoansScreen.routeName: (context) => const GetLoansScreen(),
-        },
-      ),
-    );
+        ));
   }
 }

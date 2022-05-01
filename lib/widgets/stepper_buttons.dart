@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 
 class StepperButton extends StatelessWidget {
   const StepperButton(
-      {Key? key, required this.nextPressed, required this.backPressed})
+      {Key? key,
+      required this.nextPressed,
+      required this.backPressed,
+      required this.currentIndex})
       : super(key: key);
   final Function() nextPressed;
   final Function() backPressed;
-
+  final int currentIndex;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -46,10 +49,10 @@ class StepperButton extends StatelessWidget {
                   ]),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Center(
+                child: Center(
                   child: Text(
-                    'NEXT',
-                    style: TextStyle(
+                    currentIndex == 2 ? 'CONFIRM' : 'NEXT',
+                    style: const TextStyle(
                       letterSpacing: 2,
                       color: Colors.white,
                       fontSize: 16,

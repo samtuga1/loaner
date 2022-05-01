@@ -9,6 +9,7 @@ Step loanDetailScreen() {
     isActive: _currentStep >= 0,
     title: const Text('Loan Details'),
     content: Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         getLoanSingleDetail(20, 'Loan Amount'),
         const SizedBox(

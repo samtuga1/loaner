@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loaner/providers/loan.dart';
+import 'package:loaner/screens/completed_screen.dart';
 import 'package:loaner/screens/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:loaner/screens/get_loans_screen.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
             BankDetailsScreen.routeName: (context) => const BankDetailsScreen(),
             HomeLoansScreen.routeName: (context) => const HomeLoansScreen(),
             GetLoansScreen.routeName: (context) => const GetLoansScreen(),
+            CompletedScreen.routeName: (context) => const CompletedScreen()
           },
         ));
   }

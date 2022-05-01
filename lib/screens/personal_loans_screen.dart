@@ -3,15 +3,16 @@ import 'package:loaner/widgets/loan_card.dart';
 import 'package:provider/provider.dart';
 import '../providers/loan.dart' as loans_provider;
 
-class PersonalLoansScreen extends StatelessWidget {
+class BankDetailsScreen extends StatelessWidget {
   static const routeName = '/personal_screen';
-  const PersonalLoansScreen({Key? key}) : super(key: key);
+  const BankDetailsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               margin: const EdgeInsets.all(15),

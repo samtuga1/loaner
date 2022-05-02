@@ -6,11 +6,15 @@ class LoanCard extends StatelessWidget {
       {Key? key,
       required this.loanType,
       required this.maxAmount,
-      required this.interest})
+      required this.interest,
+      required this.rate,
+      required this.id})
       : super(key: key);
   final String? loanType;
   final double? maxAmount;
   final double? interest;
+  final double? rate;
+  final String? id;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +62,7 @@ class LoanCard extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        'Lowest interest as low $interest%',
+                        'Rate of loan is $rate%',
                         style: const TextStyle(color: Colors.grey),
                       )
                     ],
@@ -83,7 +87,8 @@ class LoanCard extends StatelessWidget {
                     elevation: 3,
                     color: const Color(0xFF7C71F4),
                     onPressed: () {
-                      Navigator.of(context).pushNamed(GetLoansScreen.routeName);
+                      Navigator.of(context)
+                          .pushNamed(GetLoansScreen.routeName, arguments: id);
                     },
                     child: const Text(
                       'Apply Now',
@@ -114,7 +119,7 @@ class LoanDetailColumn extends StatelessWidget {
     if (title == 'Max Amount') {
       return '\$$amount';
     } else {
-      return '$amount%';
+      return '\$$amount';
     }
   }
 
@@ -132,7 +137,7 @@ class LoanDetailColumn extends StatelessWidget {
         ),
         Text(
           title,
-          style: TextStyle(color: Colors.grey),
+          style: const TextStyle(color: Colors.grey),
         )
       ],
     );

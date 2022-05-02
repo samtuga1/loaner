@@ -9,6 +9,7 @@ class BankDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loans = Provider.of<loans_provider.Loans>(context, listen: false);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -65,12 +66,25 @@ class BankDetailsScreen extends StatelessWidget {
                       return Consumer<loans_provider.Loans>(
                         builder: (context, loanData, _) => ListView.builder(
                           itemBuilder: (ctx, i) {
+                            final loanId = loanData.recommendedLoans[i].id;
+                            final type = loanData.personalLoans[i].loanType;
+                            final rate = loanData.personalLoans[i].rate;
+                            final maxAmount =
+                                loanData.personalLoans[i].maxAmount;
+                            final time = loanData.personalLoans[i].time;
+                            final emi = loans.calculateEMI(
+                                maxAmount: maxAmount, time: time, rate: rate);
+                            final totalToBePayed =
+                                loans.totalToRepay(emi: emi, time: time);
+                            final interest = loans.calculateInterest(
+                                maxAmount: maxAmount,
+                                totalToBePaid: totalToBePayed);
                             return LoanCard(
-                              loanType: loanData.personalLoans[i].loanType,
-                              maxAmount: loanData.personalLoans[i].maxAmount!
-                                  .toDouble(),
-                              interest: loanData.personalLoans[i].interest!
-                                  .toDouble(),
+                              id: loanId,
+                              loanType: type,
+                              maxAmount: maxAmount,
+                              interest: interest,
+                              rate: rate,
                             );
                           },
                           itemCount: loanData.personalLoans.length,

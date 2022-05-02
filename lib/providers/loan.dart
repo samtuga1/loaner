@@ -1,25 +1,34 @@
 import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:math';
 
 class Loan {
   String? loanType;
   double? maxAmount;
-  double? interest;
+  double? rate;
+  int? time;
+  String? id;
 
   Loan({
     required this.loanType,
-    required this.interest,
     required this.maxAmount,
   });
 
   // Returns my data in a map form
-  Map<String, dynamic> joJson() =>
-      {'maxAmount': maxAmount, 'interest': interest, 'loanType': loanType};
+  Map<String, dynamic> joJson() => {
+        'maxAmount': maxAmount,
+        'rate': rate,
+        'time': time,
+        'loanType': loanType,
+        'id': id
+      };
 
   Loan.fromSnapshot(snapshot)
-      : maxAmount = snapshot.data()['maxAmount'],
-        interest = snapshot.data()['interest'],
-        loanType = snapshot.data()['loanType'];
+      : maxAmount = snapshot.data()['maxAmount'].toDouble(),
+        loanType = snapshot.data()['loanType'],
+        rate = snapshot.data()['rate'].toDouble(),
+        time = snapshot.data()['time'],
+        id = snapshot.data()['id'];
 }
 
 class Loans with ChangeNotifier {
@@ -27,6 +36,11 @@ class Loans with ChangeNotifier {
   List<Loan> _recommendedLoans = [];
   List<Loan> _homeLoans = [];
   List<Loan> _personalLoans = [];
+  Loan? _singleLoan;
+  Loan? get singleLoanFecthed {
+    return _singleLoan;
+  }
+
   List<Loan> get recommendedLoans {
     return [..._recommendedLoans];
   }
@@ -48,7 +62,7 @@ class Loans with ChangeNotifier {
           .where('loanType', isEqualTo: loanType)
           .get(); //Gets the loans data
 
-      //Iterates over the data thatt is being fetched
+      //Iterates over the data that is being fetched
       List<Loan> loanList = List.from(
         data.docs.map(
           (doc) => Loan.fromSnapshot(doc),
@@ -80,6 +94,17 @@ class Loans with ChangeNotifier {
     }
   }
 
+  Future<void> fetchSingleLoan(String loanId) async {
+    final loan = await FirebaseFirestore.instance
+        .collection('loans')
+        .where('id', isEqualTo: loanId)
+        .get();
+    final singleLoan =
+        List.from(loan.docs.map((doc) => Loan.fromSnapshot(doc)));
+    _singleLoan = singleLoan[0];
+    notifyListeners();
+  }
+
   Future<void> fetchRecommendedLoans() async {
     await fetchLoans(loanType2: 'recommended', loanType: 'home');
   }
@@ -90,5 +115,28 @@ class Loans with ChangeNotifier {
 
   Future<void> fetchHomeLoans() async {
     await fetchLoans(loanType: 'home');
+  }
+
+  double? calculateInterest({double? totalToBePaid, double? maxAmount}) {
+    final interest = totalToBePaid! - maxAmount!.toDouble();
+    return double.parse(interest.toStringAsFixed(2));
+  }
+
+  double? calculateEMI({double? maxAmount, double? rate, int? time}) {
+    final rateToBeUsed =
+        (rate! / 100) / 12; // Converts rate to be used in monthly installments
+
+    final numerator =
+        maxAmount! * rateToBeUsed * pow((1 + rateToBeUsed), (time! * 12));
+
+    final denomenator = pow((1 + rateToBeUsed), (time * 12)) - 1;
+
+    final emi = numerator / denomenator; // returns the final emi to be used
+    return double.parse(emi.toStringAsFixed(2));
+  }
+
+  double? totalToRepay({double? emi, time}) {
+    final total = emi! * (time * 12);
+    return double.parse(total.toStringAsFixed(2));
   }
 }

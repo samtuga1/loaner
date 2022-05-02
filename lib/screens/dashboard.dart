@@ -15,6 +15,7 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loans = Provider.of<loans_provider.Loans>(context, listen: false);
     return Scaffold(
       drawer: const Drawer(),
       key: _scaffoldKey,
@@ -82,12 +83,25 @@ class Dashboard extends StatelessWidget {
                     return Consumer<loans_provider.Loans>(
                       builder: (context, loanData, _) => ListView.builder(
                         itemBuilder: (ctx, i) {
+                          final loanId = loanData.recommendedLoans[i].id;
+                          final type = loanData.recommendedLoans[i].loanType;
+                          final rate = loanData.recommendedLoans[i].rate;
+                          final maxAmount =
+                              loanData.recommendedLoans[i].maxAmount;
+                          final time = loanData.recommendedLoans[i].time;
+                          final emi = loans.calculateEMI(
+                              maxAmount: maxAmount, time: time, rate: rate);
+                          final totalToBePayed =
+                              loans.totalToRepay(emi: emi, time: time);
+                          final interest = loans.calculateInterest(
+                              maxAmount: maxAmount,
+                              totalToBePaid: totalToBePayed);
                           return LoanCard(
-                            loanType: loanData.recommendedLoans[i].loanType,
-                            maxAmount: loanData.recommendedLoans[i].maxAmount!
-                                .toDouble(),
-                            interest: loanData.recommendedLoans[i].interest!
-                                .toDouble(),
+                            loanType: type,
+                            id: loanId,
+                            maxAmount: maxAmount!.toDouble(),
+                            interest: interest,
+                            rate: rate,
                           );
                         },
                         itemCount: loanData.recommendedLoans.length,

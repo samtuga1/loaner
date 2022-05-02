@@ -51,7 +51,8 @@ class MyApp extends StatelessWidget {
             BankDetailsScreen.routeName: (context) => const BankDetailsScreen(),
             HomeLoansScreen.routeName: (context) => const HomeLoansScreen(),
             GetLoansScreen.routeName: (context) => const GetLoansScreen(),
-            CompletedScreen.routeName: (context) => const CompletedScreen()
+            CompletedScreen.routeName: (context) => const CompletedScreen(),
+            Dashboard.routeName: (context) => Dashboard()
           },
         ));
   }

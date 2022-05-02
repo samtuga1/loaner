@@ -1,32 +1,40 @@
 import 'package:flutter/material.dart';
 
-Step verificationScreen(int _currentStep) {
+Step verificationScreen(
+    {int? currentStep, double? totalToBePayed, double? emi, double? rate}) {
   return Step(
-    isActive: _currentStep >= 2,
+    isActive: currentStep! >= 2,
     title: const Text('Get Loan'),
     content: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Text(
+      children: [
+        const Text(
           'Verify your details to get',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         ListTile(
-          leading: Icon(
+          leading: const Icon(
             Icons.check,
             color: Colors.green,
           ),
-          title: Text('Up to 5% lower interest'),
+          title: Text('Get loan at a rate of $rate%'),
         ),
         ListTile(
-          leading: Icon(
+          leading: const Icon(
             Icons.check,
             color: Colors.green,
           ),
-          title: Text('Up to 20% higher loan amount'),
+          title: Text('You pay a total amount of \$$totalToBePayed'),
         ),
         ListTile(
+          leading: const Icon(
+            Icons.check,
+            color: Colors.green,
+          ),
+          title: Text('You pay \$$emi equaly monthly installments'),
+        ),
+        const ListTile(
           leading: Icon(
             Icons.info,
             color: Colors.grey,

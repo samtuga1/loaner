@@ -3,19 +3,24 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:dotted_line/dotted_line.dart';
 
-Step loanDetailScreen() {
+Step loanDetailScreen(
+    {final double? loanAmount,
+    final double? emi,
+    final int? time,
+    final double? rate}) {
   int _currentStep = 0;
+
   return Step(
     isActive: _currentStep >= 0,
     title: const Text('Loan Details'),
     content: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        getLoanSingleDetail(20, 'Loan Amount'),
+        getSingleLoanDetail(loanAmount, 'Loan Amount'),
         const SizedBox(
           height: 40,
         ),
-        getLoanSingleDetail(60, 'EMI Amount'),
+        getSingleLoanDetail(emi, 'EMI Amount'),
         const SizedBox(
           height: 40,
         ),
@@ -30,14 +35,14 @@ Step loanDetailScreen() {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text(
+                      children: [
+                        const Text(
                           'EMI Tenure',
                           style: TextStyle(color: Colors.black54),
                         ),
                         Text(
-                          '12 Months',
-                          style: TextStyle(color: Colors.black54),
+                          '${time! * 12} months',
+                          style: const TextStyle(color: Colors.black54),
                         )
                       ],
                     ),
@@ -46,14 +51,14 @@ Step loanDetailScreen() {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text(
+                      children: [
+                        const Text(
                           'Annual interest',
                           style: TextStyle(color: Colors.black54),
                         ),
                         Text(
-                          '12%',
-                          style: TextStyle(color: Colors.black54),
+                          '$rate%',
+                          style: const TextStyle(color: Colors.black54),
                         )
                       ],
                     ),
@@ -100,14 +105,14 @@ Step loanDetailScreen() {
   );
 }
 
-Column getLoanSingleDetail(double _value, String title) {
+Column getSingleLoanDetail(double? _value, String? title) {
   return Column(
     children: [
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            title,
+            title!,
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           Container(
@@ -127,28 +132,28 @@ Column getLoanSingleDetail(double _value, String title) {
           )
         ],
       ),
-      SfSliderTheme(
-        data: SfSliderThemeData(
-          activeTrackColor: const Color(0xFF7367F1),
-          thumbColor: const Color(0xFF7367F1),
-          activeTrackHeight: 3.95,
-          inactiveTrackHeight: 5.0,
-        ),
-        child: SfSlider(
-          inactiveColor: Colors.grey,
-          min: 0,
-          max: _value + 20.0,
-          value: _value,
-          interval: 20,
-          showTicks: true,
-          showLabels: true,
-          enableTooltip: true,
-          minorTicksPerInterval: 1,
-          onChanged: (dynamic value) {
-            _value = value;
-          },
-        ),
-      ),
+      // SfSliderTheme(
+      //   data: SfSliderThemeData(
+      //     activeTrackColor: const Color(0xFF7367F1),
+      //     thumbColor: const Color(0xFF7367F1),
+      //     activeTrackHeight: 3.95,
+      //     inactiveTrackHeight: 5.0,
+      //   ),
+      //   child: SfSlider(
+      //     inactiveColor: Colors.grey,
+      //     min: 0,
+      //     max: _value! + 100.0,
+      //     value: _value,
+      //     interval: (_value.round() / 4).round().toDouble(),
+      //     showTicks: true,
+      //     showLabels: true,
+      //     enableTooltip: true,
+      //     minorTicksPerInterval: 1,
+      //     onChanged: (dynamic value) {
+      //       _value = value;
+      //     },
+      //   ),
+      // ),
     ],
   );
 }

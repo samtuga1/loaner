@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class RegistrationForm extends StatefulWidget {
   const RegistrationForm(
@@ -14,6 +16,7 @@ class RegistrationForm extends StatefulWidget {
   final Function(
     String email,
     String username,
+    File? imagePicked,
     String password,
   ) submitFm;
 
@@ -27,12 +30,26 @@ class _RegistrationFormState extends State<RegistrationForm> {
   String _password = ''; //Stores password of the user
   final _formKey = GlobalKey<FormState>();
 
+  File? _pickedImage;
+
+  Future<void> selectImage() async {
+    final picker = ImagePicker();
+    final imageFile =
+        await picker.pickImage(source: ImageSource.camera, imageQuality: 60);
+    setState(() {
+      _pickedImage = File(imageFile!.path);
+    });
+  }
+
   //Method to submit form
   Future<void> submitForm() async {
     FocusScope.of(context).unfocus();
+    if (widget.loginMode == false && _pickedImage == null) {
+      return;
+    }
     bool formState = _formKey.currentState!.validate();
     if (formState == true) {
-      widget.submitFm(_email, _username, _password);
+      widget.submitFm(_email, _username, _pickedImage, _password);
     }
   }
 
@@ -44,6 +61,38 @@ class _RegistrationFormState extends State<RegistrationForm> {
       key: _formKey,
       child: Column(
         children: [
+          if (!widget.loginMode)
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(17.0),
+                  child: CircleAvatar(
+                    backgroundImage:
+                        _pickedImage != null ? FileImage(_pickedImage!) : null,
+                    radius: 65,
+                  ),
+                ),
+                Positioned(
+                  right: 15,
+                  top: 106,
+                  child: GestureDetector(
+                    onTap: selectImage,
+                    child: Container(
+                      child: const Center(
+                        child: Icon(Icons.edit),
+                      ),
+                      height: 33,
+                      width: 33,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Row(

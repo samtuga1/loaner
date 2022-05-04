@@ -1,6 +1,7 @@
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:loaner/widgets/profile_form.dart';
 import 'package:loaner/widgets/registration_form.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -32,6 +33,7 @@ class _AuthScreenState extends State<AuthScreen> {
   Future<void> submitFm(
     String email,
     String username,
+    File? image,
     String password,
   ) async {
     setState(() {
@@ -45,6 +47,16 @@ class _AuthScreenState extends State<AuthScreen> {
       } else {
         final authResult = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
+        final ref = FirebaseStorage.instance
+            .ref('user_images')
+            .child(authResult.user!.uid + '.jpg');
+        await ref.putFile(image!);
+        //final imageUrl = ref.getDownloadURL();
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(authResult.user!.uid)
+            .collection('details')
+            .add({'username': username, 'email': email});
       }
     } on FirebaseAuthException catch (error) {
       _showSnackBar(error.toString());
@@ -66,11 +78,6 @@ class _AuthScreenState extends State<AuthScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (!_loginMode)
-                const Align(
-                  alignment: Alignment.center,
-                  child: ProfileForm(),
-                ),
               Container(
                 margin: const EdgeInsets.only(left: 10),
                 child: Text(

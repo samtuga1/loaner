@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:dotted_line/dotted_line.dart';
 
 Step loanDetailScreen(

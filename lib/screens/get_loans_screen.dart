@@ -6,6 +6,11 @@ import '../screens/verification_screen.dart';
 import '../screens/bank_detail.dart';
 import '../widgets/stepper_buttons.dart';
 import '../screens/loan_detail_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:loaner/providers/loan.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class GetLoansScreen extends StatefulWidget {
   static const routeName = '/get_loans_screen';
@@ -20,6 +25,46 @@ class _GetLoansScreenState extends State<GetLoansScreen> {
   int _currentStep = 0;
   var _onStepContinue;
   var _onStepCancel;
+  bool isLoading = false;
+
+  Future<void> sendRequest(String loanId, Loan requestedLoan) async {
+    String loanStatus = 'Awaiting';
+    String currentDate = DateFormat.yMMMMd().format(DateTime.now());
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc('949rFdUbldcoC3i6PomP')
+          .collection(FirebaseAuth.instance.currentUser!.email!)
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('my_loans')
+          .doc(requestedLoan.id)
+          .set({
+        'maxAmount': requestedLoan.maxAmount,
+        'type': requestedLoan.loanType,
+        'status': loanStatus,
+        'createdAt': currentDate,
+      }).then((_) {
+        Navigator.of(context).pushReplacementNamed(
+          CompletedScreen.routeName,
+        );
+      });
+    } catch (error) {
+      showDialog(
+        context: context,
+        builder: (ctx) => const AlertDialog(
+          content: Text('Please try again later'),
+          title: Text(' An error occured!'),
+        ),
+      );
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final loanId = ModalRoute.of(context)!.settings.arguments as String;
@@ -77,9 +122,13 @@ class _GetLoansScreenState extends State<GetLoansScreen> {
                         child: CircularProgressIndicator(),
                       );
                     } else if (snapshot.hasError) {
-                      print(snapshot.data);
-                      print(snapshot.error);
-                      return const Text('Error');
+                      return const Center(
+                        child: Text(
+                          'Error fetching data, kindly try again later',
+                          style: TextStyle(fontSize: 25),
+                          textAlign: TextAlign.center,
+                        ),
+                      );
                     } else {
                       return Consumer<Loans>(builder: (context, loans, _) {
                         final emi = loans.calculateEMI(
@@ -133,8 +182,7 @@ class _GetLoansScreenState extends State<GetLoansScreen> {
                                     _currentStep++;
                                   });
                                 } else {
-                                  Navigator.of(context).pushReplacementNamed(
-                                      CompletedScreen.routeName);
+                                  sendRequest(loanId, loans.singleLoanFecthed!);
                                 }
                               },
                               onStepCancel: () {
@@ -148,6 +196,8 @@ class _GetLoansScreenState extends State<GetLoansScreen> {
                             Align(
                               alignment: Alignment.bottomCenter,
                               child: StepperButton(
+                                isLoading: isLoading,
+                                loanId: loanId,
                                 currentIndex: _currentStep,
                                 nextPressed: () {
                                   _onStepContinue();

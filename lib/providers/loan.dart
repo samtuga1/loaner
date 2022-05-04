@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math';
@@ -8,6 +9,7 @@ class Loan {
   double? rate;
   int? time;
   String? id;
+  String? status;
 
   Loan({
     required this.loanType,
@@ -94,7 +96,7 @@ class Loans with ChangeNotifier {
     }
   }
 
-  Future<void> fetchSingleLoan(String loanId) async {
+  Future<Loan> fetchSingleLoan(String loanId) async {
     final loan = await FirebaseFirestore.instance
         .collection('loans')
         .where('id', isEqualTo: loanId)
@@ -103,6 +105,7 @@ class Loans with ChangeNotifier {
         List.from(loan.docs.map((doc) => Loan.fromSnapshot(doc)));
     _singleLoan = singleLoan[0];
     notifyListeners();
+    return _singleLoan!;
   }
 
   Future<void> fetchRecommendedLoans() async {

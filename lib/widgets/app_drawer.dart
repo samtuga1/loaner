@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:loaner/screens/add_loan_screen.dart';
 import '../screens/dashboard.dart';
 import '../screens/my_loans_screen.dart';
+import '../screens/requested_loans_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -55,6 +57,58 @@ class AppDrawer extends StatelessWidget {
                       ),
                       title: Text(
                         'My Loans',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  const Divider(
+                    color: Colors.white70,
+                  )
+                ],
+              ),
+              Column(
+                children: [
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.of(context)
+                          .pushReplacementNamed(AddLoanScreen.routname);
+                    },
+                    child: const ListTile(
+                      leading: Icon(
+                        Icons.playlist_add,
+                        color: Colors.white,
+                      ),
+                      title: Text(
+                        'Add Loan',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  const Divider(
+                    color: Colors.white70,
+                  )
+                ],
+              ),
+              Column(
+                children: [
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.of(context)
+                          .pushReplacementNamed(RequestedLoansScreen.routeName);
+                    },
+                    child: const ListTile(
+                      leading: Icon(
+                        Icons.payment,
+                        color: Colors.white,
+                      ),
+                      title: Text(
+                        'Requested Loans',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 17,

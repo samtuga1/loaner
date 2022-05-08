@@ -24,7 +24,6 @@ class _AuthScreenState extends State<AuthScreen> {
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        backgroundColor: Theme.of(context).errorColor,
         content: Text(message),
       ),
     );
@@ -54,18 +53,22 @@ class _AuthScreenState extends State<AuthScreen> {
         //final imageUrl = ref.getDownloadURL();
         FirebaseFirestore.instance
             .collection('users')
-            .doc(authResult.user!.uid)
+            .doc('${authResult.user!.uid} - uid')
             .collection('details')
             .add({'username': username, 'email': email});
       }
     } on FirebaseAuthException catch (error) {
-      _showSnackBar(error.toString());
+      String message = 'An error occured, kindly try again later';
+      if (error.toString().contains('[firebase_auth/user-not-found]')) {
+        message = 'There is no user registered under this email';
+      } else if (error.toString().contains('[firebase_auth/wrong-password]')) {
+        message = 'Kindly check the password and try again';
+      }
+      _showSnackBar(message);
     } catch (err) {
-      _showSnackBar('An error occured try again later');
+      _showSnackBar('An error occured, kindly try again later');
     }
-    setState(() {
-      isLoading = false;
-    });
+    isLoading = false;
   }
 
   @override

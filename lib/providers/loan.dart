@@ -10,11 +10,7 @@ class Loan {
   int? time;
   String? id;
   String? status;
-
-  Loan({
-    required this.loanType,
-    required this.maxAmount,
-  });
+  String? createdAt;
 
   // Returns my data in a map form
   Map<String, dynamic> joJson() => {
@@ -22,7 +18,8 @@ class Loan {
         'rate': rate,
         'time': time,
         'loanType': loanType,
-        'id': id
+        'id': id,
+        'createdAt': createdAt
       };
 
   Loan.fromSnapshot(snapshot)
@@ -30,17 +27,23 @@ class Loan {
         loanType = snapshot.data()['loanType'],
         rate = snapshot.data()['rate'].toDouble(),
         time = snapshot.data()['time'],
-        id = snapshot.data()['id'];
+        id = snapshot.data()['id'],
+        createdAt = snapshot.data()['createdAt'];
 }
 
 class Loans with ChangeNotifier {
   // Store the loans according to thei respective names
   List<Loan> _recommendedLoans = [];
+  List<Loan> _myLoans = [];
   List<Loan> _homeLoans = [];
   List<Loan> _personalLoans = [];
   Loan? _singleLoan;
   Loan? get singleLoanFecthed {
     return _singleLoan;
+  }
+
+  List<Loan> get myLoans {
+    return _myLoans;
   }
 
   List<Loan> get recommendedLoans {
@@ -81,7 +84,7 @@ class Loans with ChangeNotifier {
       if (loanType2 == 'recommended') {
         var data = await FirebaseFirestore.instance
             .collection('loans')
-            .orderBy('interest', descending: false)
+            .orderBy('rate', descending: false)
             .get();
         List<Loan> loanList = List.from(
           data.docs.map(
@@ -118,6 +121,33 @@ class Loans with ChangeNotifier {
 
   Future<void> fetchHomeLoans() async {
     await fetchLoans(loanType: 'home');
+  }
+
+  Future<void> fetchMyLoans() async {
+    final loan = await FirebaseFirestore.instance
+        .collection('loans')
+        .where('id', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    final List<Loan> myLoans =
+        List.from(loan.docs.map((doc) => Loan.fromSnapshot(doc)));
+    _myLoans = myLoans;
+    notifyListeners();
+  }
+
+  void deleteLoan(double? maxAmount, String? type, String? createdAt) {
+    var loan = FirebaseFirestore.instance
+        .collection('loans')
+        .where('id', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .where('createdAt', isEqualTo: createdAt)
+        .where('loanType', isEqualTo: type)
+        .where('maxAmount', isEqualTo: maxAmount);
+    var batch = FirebaseFirestore.instance.batch();
+    loan.get().then((querySnapshot) {
+      for (var doc in querySnapshot.docs) {
+        batch.delete(doc.reference);
+      }
+      return batch.commit();
+    });
   }
 
   double? calculateInterest({double? totalToBePaid, double? maxAmount}) {

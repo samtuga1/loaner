@@ -11,6 +11,7 @@ class RecommendedLoansScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final loans = Provider.of<loans_provider.Loans>(context, listen: false);
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [

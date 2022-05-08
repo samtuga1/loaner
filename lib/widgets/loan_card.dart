@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:loaner/screens/get_loans_screen.dart';
 
@@ -87,8 +88,39 @@ class LoanCard extends StatelessWidget {
                     elevation: 3,
                     color: const Color(0xFF7C71F4),
                     onPressed: () {
-                      Navigator.of(context)
-                          .pushNamed(GetLoansScreen.routeName, arguments: id);
+                      if (id == FirebaseAuth.instance.currentUser!.uid) {
+                        showDialog(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            backgroundColor: const Color(0xFF7A6FF2),
+                            content: const Text(
+                              'Sorry, you cannot apply for your own loan',
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.white),
+                            ),
+                            title: const Text(
+                              'Alert!',
+                              style:
+                                  TextStyle(fontSize: 22, color: Colors.white),
+                            ),
+                            actions: [
+                              FlatButton(
+                                color: Colors.white60,
+                                onPressed: () {
+                                  Navigator.of(ctx).pop();
+                                },
+                                child: const Text(
+                                  'Go back',
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      } else {
+                        Navigator.of(context)
+                            .pushNamed(GetLoansScreen.routeName, arguments: id);
+                      }
                     },
                     child: const Text(
                       'Apply Now',

@@ -45,6 +45,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
   Future<void> submitForm() async {
     FocusScope.of(context).unfocus();
     if (widget.loginMode == false && _pickedImage == null) {
+      ScaffoldMessenger.of(widget.ctx).showSnackBar(
+        const SnackBar(
+          content: Text('Kindly add your photo'),
+        ),
+      );
       return;
     }
     bool formState = _formKey.currentState!.validate();
@@ -54,6 +59,12 @@ class _RegistrationFormState extends State<RegistrationForm> {
   }
 
   final passwordKey = GlobalKey();
+
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -190,7 +201,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
             ),
           ),
           widget.isLoading == true
-              ? const Center(child: CircularProgressIndicator())
+              ? Container(
+                  margin: const EdgeInsets.only(top: 20),
+                  child: const Center(child: CircularProgressIndicator()))
               : Padding(
                   padding: const EdgeInsets.only(right: 15, left: 15),
                   child: InkWell(

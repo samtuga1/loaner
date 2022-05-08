@@ -36,10 +36,8 @@ class _GetLoansScreenState extends State<GetLoansScreen> {
       });
       await FirebaseFirestore.instance
           .collection('users')
-          .doc('949rFdUbldcoC3i6PomP')
-          .collection(FirebaseAuth.instance.currentUser!.email!)
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .collection('my_loans')
+          .doc('${FirebaseAuth.instance.currentUser!.uid} - uid')
+          .collection('requested_loans')
           .doc(requestedLoan.id)
           .set({
         'maxAmount': requestedLoan.maxAmount,

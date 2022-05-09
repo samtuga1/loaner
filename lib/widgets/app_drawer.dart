@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:loaner/screens/add_loan_screen.dart';
+import '../screens/add_loan_screen.dart';
 import '../screens/dashboard.dart';
 import '../screens/my_loans_screen.dart';
 import '../screens/requested_loans_screen.dart';
@@ -124,8 +124,9 @@ class AppDrawer extends StatelessWidget {
               Column(
                 children: [
                   FlatButton(
-                    onPressed: () {
-                      FirebaseAuth.instance.signOut();
+                    onPressed: () async {
+                      final FirebaseAuth _auth = FirebaseAuth.instance;
+                      await _auth.signOut();
                     },
                     child: const ListTile(
                       leading: Icon(

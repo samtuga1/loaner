@@ -41,11 +41,21 @@ class _AuthScreenState extends State<AuthScreen> {
     final _auth = FirebaseAuth.instance;
     try {
       if (_loginMode) {
-        final authResult = await _auth.signInWithEmailAndPassword(
-            email: email, password: password);
+        final authResult = await _auth
+            .signInWithEmailAndPassword(email: email, password: password)
+            .then((_) {
+          setState(() {
+            isLoading = false;
+          });
+        });
       } else {
-        final authResult = await _auth.createUserWithEmailAndPassword(
-            email: email, password: password);
+        final authResult = await _auth
+            .createUserWithEmailAndPassword(email: email, password: password)
+            .then((_) {
+          setState(() {
+            isLoading = false;
+          });
+        });
         final ref = FirebaseStorage.instance
             .ref('user_images')
             .child(authResult.user!.uid + '.jpg');
@@ -68,7 +78,11 @@ class _AuthScreenState extends State<AuthScreen> {
     } catch (err) {
       _showSnackBar('An error occured, kindly try again later');
     }
-    isLoading = false;
+    if (mounted) {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override

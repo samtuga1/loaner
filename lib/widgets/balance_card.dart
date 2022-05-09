@@ -42,7 +42,7 @@ class BalanceCard extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(left: 20),
                   child: const Text(
-                    '\$45,324,000.00',
+                    '\$0.00',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

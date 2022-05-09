@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:loaner/providers/loan.dart';
 import 'package:loaner/widgets/app_drawer.dart';
@@ -37,38 +36,46 @@ class MyLoansScreen extends StatelessWidget {
                         itemCount: loans.myLoans.length,
                         itemBuilder: (BuildContext context, int index) {
                           final myLoan = loans.myLoans[index];
-                          return Dismissible(
-                            background: Container(
-                              color: Colors.redAccent,
-                              child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20)),
-                                  margin: const EdgeInsets.only(right: 14.0),
-                                  child: const Icon(
-                                    Icons.delete,
-                                    size: 40,
-                                    color: Colors.white,
+                          return Column(
+                            children: [
+                              Dismissible(
+                                background: Container(
+                                  color: Colors.redAccent,
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      margin:
+                                          const EdgeInsets.only(right: 14.0),
+                                      child: const Icon(
+                                        Icons.delete,
+                                        size: 40,
+                                        color: Colors.white,
+                                      ),
+                                    ),
                                   ),
                                 ),
+                                key: ValueKey(loans.myLoans[index].id),
+                                direction: DismissDirection.endToStart,
+                                onDismissed: (direction) {
+                                  loans.deleteLoan(
+                                    myLoan.maxAmount,
+                                    myLoan.loanType,
+                                    myLoan.createdAt,
+                                  );
+                                },
+                                child: MyLoanCard(
+                                  maxAmount: myLoan.maxAmount,
+                                  createdAt: myLoan.createdAt,
+                                  type: myLoan.loanType,
+                                ),
                               ),
-                            ),
-                            key: ValueKey(
-                                FirebaseAuth.instance.currentUser!.uid),
-                            direction: DismissDirection.endToStart,
-                            onDismissed: (direction) {
-                              loans.deleteLoan(
-                                myLoan.maxAmount,
-                                myLoan.loanType,
-                                myLoan.createdAt,
-                              );
-                            },
-                            child: MyLoanCard(
-                              maxAmount: myLoan.maxAmount,
-                              createdAt: myLoan.createdAt,
-                              type: myLoan.loanType,
-                            ),
+                              const SizedBox(
+                                height: 20,
+                              )
+                            ],
                           );
                         },
                       ),

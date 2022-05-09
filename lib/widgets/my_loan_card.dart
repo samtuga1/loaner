@@ -18,7 +18,6 @@ class MyLoanCard extends StatelessWidget {
             }
           : null,
       child: Container(
-        margin: const EdgeInsets.only(bottom: 20),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         decoration: BoxDecoration(
           color: Colors.white,

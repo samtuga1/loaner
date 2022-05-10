@@ -36,6 +36,7 @@ https://user-images.githubusercontent.com/79772304/167704093-37c6a0c5-6734-499b-
 - Firebase Authentication
 - Firebase Firestore
 - Firebase storage
+- Provider state management
 
 ### TODO:
 - I will be adding firebase cloud messaging(Push notifications) and also firebase funtions service 

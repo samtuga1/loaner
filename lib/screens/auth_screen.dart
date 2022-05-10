@@ -65,7 +65,10 @@ class _AuthScreenState extends State<AuthScreen> {
             .collection('users')
             .doc('${authResult.user!.uid} - uid')
             .collection('details')
-            .add({'username': username, 'email': email});
+            .add({
+          'username': username,
+          'email': email,
+        });
       }
     } on FirebaseAuthException catch (error) {
       String message = 'An error occured, kindly try again later';

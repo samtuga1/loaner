@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:loaner/providers/loan.dart' as loans_provider;
 import 'package:loaner/widgets/app_drawer.dart';
 import '../screens/recommended_loans_screen.dart';
@@ -14,7 +12,21 @@ class Dashboard extends StatelessWidget {
   static const routeName = '/dashboard';
   Dashboard({Key? key}) : super(key: key);
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  bool isInit = true;
+
+  final bool isInit = true;
+
+  // @override
+  // void initState() {
+  //   final fbm = FirebaseMessaging.instance;
+  //   fbm.requestPermission();
+  //   FirebaseMessaging.onMessage.listen((RemoteMessage msg) {
+  //     print(msg.notification!.body);
+  //   });
+  //   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage msg) {
+  //     print(msg.data);
+  //   });
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {

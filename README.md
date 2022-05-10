@@ -1,16 +1,40 @@
 # loaner
 
-A new Flutter project.
+#A loan management App 
+-----------------------
+#### This App is used to borrow and lend loans
+#### Note: The App may take time to open due to some initialization happening at the backend.
 
-## Getting Started
+#### Demo video below
+https://user-images.githubusercontent.com/79772304/167704093-37c6a0c5-6734-499b-8f02-ca6b087ca924.mp4
 
-This project is a starting point for a Flutter application.
+####This App has only been tested on Android and not IOS.
+#### Flutter Version Used : 2.10.6
+-----------------------
 
-A few resources to get you started if this is your first Flutter project:
+#Screenshots
+![1 1](https://user-images.githubusercontent.com/79772304/167704045-af459bab-aa15-4db3-bb56-29f7a52201fc.png)
+![1 2](https://user-images.githubusercontent.com/79772304/167704049-6e5fd988-0446-4d5d-9759-a79adef29081.png)
+![1 3](https://user-images.githubusercontent.com/79772304/167704058-7d5c3c4b-075c-40f4-b04d-500a77021f69.png)
+![1 4](https://user-images.githubusercontent.com/79772304/167704064-7fae87dd-75a6-4c48-86e1-3d2c401aa755.png)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Screens  
+- Login and Signup Screen 
+- Dahboard Screen  
+- Recommended Loans Screen 
+- Personal Loans Screen 
+- Home Loans Screen 
+- Add Loan Screen 
+- Requested Loans Screen
+- My added Loans Screen 
+- Loan Application Screen(Loan details, Adding credential, Loan verification Screens)
+- Loan application completion screen
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Funtionality
+- Firebase Authentication
+- Firebase Firestore
+- Firebase storage
+
+###TODO:
+- I will be adding firebase cloud messaging(Push notifications) and also firebase funtions service 
+  to automate sending of messages when user has applied for loan and when the lender and approved the loan

@@ -11,68 +11,61 @@ class MyLoanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: status == null
-          ? () {
-              print('my loans');
-            }
-          : null,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(width: 1.2, color: Colors.grey),
-          borderRadius: BorderRadius.circular(13),
-        ),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '\$$maxAmount',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF1D1D22),
-                  ),
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(width: 1.2, color: Colors.grey),
+        borderRadius: BorderRadius.circular(13),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '\$$maxAmount',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF1D1D22),
                 ),
-                Text(
-                  status == null ? 'Interest' : status!,
-                  style: const TextStyle(
-                    fontSize: 15.5,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF7e73f5),
-                  ),
+              ),
+              Text(
+                status == null ? 'Interest' : status!,
+                style: const TextStyle(
+                  fontSize: 15.5,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF7e73f5),
                 ),
-              ],
-            ),
-            const SizedBox(
-              height: 13,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  type == 'personal' ? 'Personal Loan' : 'Home Loan',
-                  style: const TextStyle(
-                    fontSize: 15.5,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.bold,
-                  ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 13,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                type == 'personal' ? 'Personal Loan' : 'Home Loan',
+                style: const TextStyle(
+                  fontSize: 15.5,
+                  color: Colors.grey,
+                  fontWeight: FontWeight.bold,
                 ),
-                Text(
-                  createdAt!,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey,
-                  ),
+              ),
+              Text(
+                createdAt!,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey,
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

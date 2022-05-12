@@ -34,7 +34,7 @@ https://user-images.githubusercontent.com/79772304/167704093-37c6a0c5-6734-499b-
 
 ## Funtionality
 - Firebase Authentication
-- Firebase Firestore
+- Firebase Firestore (Sorting, Filtering, Deletion, Posting data, Getting data)
 - Firebase storage
 - Provider state management
 

@@ -32,7 +32,7 @@ https://user-images.githubusercontent.com/79772304/167704093-37c6a0c5-6734-499b-
 - Loan Application Screen(Loan details, Adding credential, Loan verification Screens)
 - Loan application completion screen
 
-## Funtionality
+## Funtionalities
 - Firebase Authentication
 - Firebase Firestore (Sorting, Filtering, Deletion, Posting data, Getting data)
 - Firebase storage

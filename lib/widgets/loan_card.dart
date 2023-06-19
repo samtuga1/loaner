@@ -84,9 +84,11 @@ class LoanCard extends StatelessWidget {
                     amount: interest!,
                     title: 'Interest',
                   ),
-                  RaisedButton(
-                    elevation: 3,
-                    color: const Color(0xFF7C71F4),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 3,
+                      backgroundColor: const Color(0xFF7C71F4),
+                    ),
                     onPressed: () {
                       if (id == FirebaseAuth.instance.currentUser!.uid) {
                         showDialog(
@@ -104,8 +106,10 @@ class LoanCard extends StatelessWidget {
                                   TextStyle(fontSize: 22, color: Colors.white),
                             ),
                             actions: [
-                              FlatButton(
-                                color: Colors.white60,
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white60,
+                                ),
                                 onPressed: () {
                                   Navigator.of(ctx).pop();
                                 },

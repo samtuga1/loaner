@@ -19,7 +19,7 @@ class AppDrawer extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  FlatButton(
+                  ElevatedButton(
                     onPressed: () {
                       Navigator.of(context)
                           .pushReplacementNamed(Dashboard.routeName);
@@ -45,7 +45,7 @@ class AppDrawer extends StatelessWidget {
               ),
               Column(
                 children: [
-                  FlatButton(
+                  ElevatedButton(
                     onPressed: () {
                       Navigator.of(context)
                           .pushReplacementNamed(MyLoansScreen.routeName);
@@ -71,7 +71,7 @@ class AppDrawer extends StatelessWidget {
               ),
               Column(
                 children: [
-                  FlatButton(
+                  ElevatedButton(
                     onPressed: () {
                       Navigator.of(context)
                           .pushReplacementNamed(AddLoanScreen.routname);
@@ -97,7 +97,7 @@ class AppDrawer extends StatelessWidget {
               ),
               Column(
                 children: [
-                  FlatButton(
+                  ElevatedButton(
                     onPressed: () {
                       Navigator.of(context)
                           .pushReplacementNamed(RequestedLoansScreen.routeName);
@@ -123,7 +123,7 @@ class AppDrawer extends StatelessWidget {
               ),
               Column(
                 children: [
-                  FlatButton(
+                  ElevatedButton(
                     onPressed: () async {
                       final FirebaseAuth _auth = FirebaseAuth.instance;
                       await _auth.signOut();

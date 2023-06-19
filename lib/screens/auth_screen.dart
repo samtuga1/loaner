@@ -102,14 +102,14 @@ class _AuthScreenState extends State<AuthScreen> {
                 margin: const EdgeInsets.only(left: 10),
                 child: Text(
                   'Welcome 👋',
-                  style: textTheme.headline4!.copyWith(color: Colors.black87),
+                  style: textTheme.headlineMedium!.copyWith(color: Colors.black87),
                 ),
               ),
               Container(
                 margin: const EdgeInsets.only(left: 10, top: 8, bottom: 10),
                 child: Text(
                   _loginMode == true ? 'Login now' : 'Signup to get started',
-                  style: textTheme.headline6!
+                  style: textTheme.titleLarge!
                       .copyWith(color: Colors.black54, fontSize: 20),
                 ),
               ),
@@ -124,7 +124,7 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
               Align(
                 alignment: Alignment.centerRight,
-                child: FlatButton(
+                child: ElevatedButton(
                   onPressed: switchSignType,
                   child: Text(
                     _loginMode == true

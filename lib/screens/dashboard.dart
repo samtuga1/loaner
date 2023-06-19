@@ -65,7 +65,7 @@ class Dashboard extends StatelessWidget {
                   'Recommended Loans',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
-                FlatButton(
+                ElevatedButton(
                   onPressed: () {
                     Navigator.of(context)
                         .pushNamed(RecommendedLoansScreen.routeName);

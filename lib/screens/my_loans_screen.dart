@@ -7,16 +7,20 @@ import 'package:provider/provider.dart';
 
 class MyLoansScreen extends StatelessWidget {
   static const routeName = '/my_loans';
-  const MyLoansScreen({Key? key}) : super(key: key);
+  MyLoansScreen({Key? key}) : super(key: key);
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       drawer: const AppDrawer(),
       body: SafeArea(
         child: Column(children: [
-          const GreetingBarner(),
+          GreetingBarner(
+            drawerKey: _scaffoldKey,
+          ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(top: 20.0, left: 15, right: 15),

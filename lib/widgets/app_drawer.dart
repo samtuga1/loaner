@@ -20,6 +20,9 @@ class AppDrawer extends StatelessWidget {
               Column(
                 children: [
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.purple,
+                    ),
                     onPressed: () {
                       Navigator.of(context)
                           .pushReplacementNamed(Dashboard.routeName);
@@ -46,6 +49,9 @@ class AppDrawer extends StatelessWidget {
               Column(
                 children: [
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.purple,
+                    ),
                     onPressed: () {
                       Navigator.of(context)
                           .pushReplacementNamed(MyLoansScreen.routeName);
@@ -72,6 +78,9 @@ class AppDrawer extends StatelessWidget {
               Column(
                 children: [
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.purple,
+                    ),
                     onPressed: () {
                       Navigator.of(context)
                           .pushReplacementNamed(AddLoanScreen.routname);
@@ -98,6 +107,9 @@ class AppDrawer extends StatelessWidget {
               Column(
                 children: [
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.purple,
+                    ),
                     onPressed: () {
                       Navigator.of(context)
                           .pushReplacementNamed(RequestedLoansScreen.routeName);
@@ -124,9 +136,12 @@ class AppDrawer extends StatelessWidget {
               Column(
                 children: [
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.purple,
+                    ),
                     onPressed: () async {
-                      final FirebaseAuth _auth = FirebaseAuth.instance;
-                      await _auth.signOut();
+                      final FirebaseAuth auth = FirebaseAuth.instance;
+                      await auth.signOut();
                     },
                     child: const ListTile(
                       leading: Icon(

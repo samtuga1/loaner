@@ -4,10 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:loaner/screens/dashboard.dart';
 import 'package:loaner/widgets/app_drawer.dart';
+import 'package:loaner/widgets/greetings_banner.dart';
 
 class AddLoanScreen extends StatefulWidget {
   static const routname = '/add_loan';
-  AddLoanScreen({
+  const AddLoanScreen({
     Key? key,
   }) : super(key: key);
 
@@ -16,6 +17,7 @@ class AddLoanScreen extends StatefulWidget {
 }
 
 class _AddLoanScreenState extends State<AddLoanScreen> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   late String id;
   //Stores the id of the loan
   late double maxAmount;
@@ -59,8 +61,15 @@ class _AddLoanScreenState extends State<AddLoanScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       drawer: const AppDrawer(),
+      key: _scaffoldKey,
+      appBar: PreferredSize(
+        preferredSize: const Size(double.infinity, 90),
+        child: GreetingBarner(
+          drawerKey: _scaffoldKey,
+        ),
+      ),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Form(
         key: _formKey,
         child: Center(
@@ -234,15 +243,6 @@ class _AddLoanScreenState extends State<AddLoanScreen> {
                           child: Container(
                             margin: const EdgeInsets.only(top: 25),
                             height: 60,
-                            child: const Center(
-                              child: Text(
-                                'Add Loan',
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               gradient: LinearGradient(
@@ -253,6 +253,15 @@ class _AddLoanScreenState extends State<AddLoanScreen> {
                                   const Color(0xFF7B70F3),
                                   const Color(0xFF7B70F3).withOpacity(0.7),
                                 ],
+                              ),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'Add Loan',
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                           ),

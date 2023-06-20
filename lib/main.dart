@@ -41,8 +41,8 @@ class MyApp extends StatelessWidget {
           title: 'Loan Manager',
           theme: ThemeData(
             scaffoldBackgroundColor: const Color(0xFFF7F5FF),
-            backgroundColor: const Color(0xFFFFFFFF),
             textTheme: GoogleFonts.ptSansTextTheme(textTheme),
+            // colorScheme: ColorScheme(background: const Color(0xFFFFFFFF)),
           ),
           home: StreamBuilder(
             stream: FirebaseAuth.instance.authStateChanges(),
@@ -63,8 +63,8 @@ class MyApp extends StatelessWidget {
             CompletedScreen.routeName: (context) => const CompletedScreen(),
             Dashboard.routeName: (context) => Dashboard(),
             RequestedLoansScreen.routeName: (context) => RequestedLoansScreen(),
-            AddLoanScreen.routname: (context) => AddLoanScreen(),
-            MyLoansScreen.routeName: (context) => const MyLoansScreen(),
+            AddLoanScreen.routname: (context) => const AddLoanScreen(),
+            MyLoansScreen.routeName: (context) => MyLoansScreen(),
           },
         ));
   }

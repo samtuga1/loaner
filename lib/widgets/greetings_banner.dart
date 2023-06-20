@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:loaner/providers/greeting_card.dart';
 import 'package:provider/provider.dart';
 import '../providers/user.dart';
 
 class GreetingBarner extends StatelessWidget {
   const GreetingBarner({Key? key, this.drawerKey}) : super(key: key);
-  final dynamic drawerKey;
+  final GlobalKey<ScaffoldState>? drawerKey;
 
   String getGreeting() {
     int hour = DateTime.now().hour;
@@ -44,7 +43,22 @@ class GreetingBarner extends StatelessWidget {
             children: [
               Expanded(
                 child: ListTile(
-                  leading: const ProfilePhotoContainer(),
+                  leading: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        onPressed: () => drawerKey!.currentState!.openDrawer(),
+                        icon: const Icon(
+                          Icons.apps_rounded,
+                        ),
+                      ),
+                      const CircleAvatar(
+                        backgroundImage: NetworkImage(
+                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL_JlCFnIGX5omgjEjgV9F3sBRq14eTERK9w&usqp=CAU',
+                        ),
+                      )
+                    ],
+                  ),
                   title: const Username(),
                   subtitle: Text(
                     getGreeting(),
@@ -77,29 +91,31 @@ class GreetingBarner extends StatelessWidget {
   }
 }
 
-class ProfilePhotoContainer extends StatelessWidget {
-  const ProfilePhotoContainer({
-    Key? key,
-  }) : super(key: key);
+// class ProfilePhotoContainer extends StatelessWidget {
+//   const ProfilePhotoContainer({
+//     Key? key,
+//   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Provider.of<ProfilePicture>(context, listen: false)
-          .getProfilePicture(),
-      builder: (context, snapshot) => Consumer<ProfilePicture>(
-        builder: (context, photo, _) => CircleAvatar(
-          radius: 24,
-          backgroundImage: snapshot.connectionState == ConnectionState.waiting
-              ? const NetworkImage(
-                  'https://monstar-lab.com/global/wp-content/uploads/sites/11/2019/04/male-placeholder-image.jpeg',
-                )
-              : NetworkImage(photo.profilePicture!),
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return FutureBuilder(
+//       future: Provider.of<ProfilePicture>(context, listen: false)
+//           .getProfilePicture(),
+//       builder: (context, snapshot) => Consumer<ProfilePicture>(
+//         builder: (context, photo, _) => CircleAvatar(
+//           radius: 24,
+//           backgroundImage: snapshot.connectionState == ConnectionState.waiting
+//               ? const NetworkImage(
+//                   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL_JlCFnIGX5omgjEjgV9F3sBRq14eTERK9w&usqp=CAU')
+//               : NetworkImage(
+//                   photo.profilePicture ??
+//                       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL_JlCFnIGX5omgjEjgV9F3sBRq14eTERK9w&usqp=CAU',
+//                 ),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class Username extends StatelessWidget {
   const Username({
@@ -115,7 +131,7 @@ class Username extends StatelessWidget {
       builder: (context, snapshot) => Text(
         snapshot.connectionState == ConnectionState.waiting
             ? 'Welcome !'
-            : 'Welcome $username!',
+            : 'Welcome Samuel!',
         style: const TextStyle(
           fontSize: 15,
           color: Colors.grey,
